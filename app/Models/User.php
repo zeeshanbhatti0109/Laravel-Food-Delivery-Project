@@ -91,6 +91,11 @@ class User extends Authenticatable
         return in_array($permission, $this->permissions(), true);
     }
 
+    public function can($abilities, $arguments = [])
+    {
+        return \Illuminate\Support\Facades\Gate::forUser($this)->check($abilities, $arguments);
+    }
+
     public function restaurant(): HasOne
 {
     return $this->hasOne(Restaurant::class, 'owner_id');
