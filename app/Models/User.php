@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Restaurant;
 use App\Enums\RoleName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class User extends Authenticatable
 {
@@ -88,4 +90,15 @@ class User extends Authenticatable
     {
         return in_array($permission, $this->permissions(), true);
     }
+
+    public function can($abilities, $arguments = [])
+    {
+        return \Illuminate\Support\Facades\Gate::forUser($this)->check($abilities, $arguments);
+    }
+
+    public function restaurant(): HasOne
+{
+    return $this->hasOne(Restaurant::class, 'owner_id');
+}
+
 }
