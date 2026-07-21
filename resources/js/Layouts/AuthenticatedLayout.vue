@@ -31,7 +31,9 @@ const showingNavigationDropdown = ref(false)
                   Dashboard
                 </NavLink>
 
+                <!-- ✅ ADD v-if TO THIS LINK -->
                 <NavLink
+                  v-if="can('restaurant.viewAny')"
                   :href="route('admin.restaurants.index')"
                   :active="route().current('admin.restaurants.index')"
                 >
@@ -123,6 +125,15 @@ const showingNavigationDropdown = ref(false)
             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </ResponsiveNavLink>
+
+            <!-- ✅ ADD v-if TO THIS MOBILE LINK TOO -->
+            <ResponsiveNavLink
+              v-if="can('restaurant.viewAny')"
+              :href="route('admin.restaurants.index')"
+              :active="route().current('admin.restaurants.index')"
+            >
+              Restaurants
+            </ResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->
@@ -155,6 +166,11 @@ const showingNavigationDropdown = ref(false)
 
       <!-- Page Content -->
       <main>
+        <!-- Status Message -->
+        <div v-if="$page.props.status" class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+          <div class="alert alert-success">{{ $page.props.status }}</div>
+        </div>
+
         <slot />
       </main>
     </div>
