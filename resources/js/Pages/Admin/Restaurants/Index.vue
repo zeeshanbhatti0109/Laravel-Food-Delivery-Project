@@ -20,20 +20,11 @@ defineProps({
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-<<<<<<< HEAD
-          <div class="p-6" v-if="$page.props.auth.can['restaurant.create']">
-            <Link class="btn btn-primary" :href="route('admin.restaurants.create')">Add New Restaurant</Link>
-          </div>
-=======
-          
-          <!-- ✅ CHANGED: Using can('restaurant.create') -->
           <div class="p-6" v-if="can('restaurant.create')">
             <Link class="btn btn-primary" :href="route('admin.restaurants.create')">
               Add New Restaurant
             </Link>
           </div>
-          
->>>>>>> main
           <div class="p-6 text-gray-900 overflow-x-scroll">
             <table class="table">
               <thead>
@@ -44,10 +35,7 @@ defineProps({
                   <th>Address</th>
                   <th>Owner Name</th>
                   <th>Owner Email</th>
-<<<<<<< HEAD
-=======
                   <th>Actions</th>
->>>>>>> main
                 </tr>
               </thead>
               <tbody>
@@ -60,8 +48,6 @@ defineProps({
                   <td>
                     <a :href="'mailto:' + restaurant.owner.email">{{ restaurant.owner.email }}</a>
                   </td>
-<<<<<<< HEAD
-=======
                   <td>
                     <!-- ✅ CHANGED: Using can('restaurant.update') -->
                     <Link
@@ -72,7 +58,6 @@ defineProps({
                       Edit
                     </Link>
                   </td>
->>>>>>> main
                 </tr>
               </tbody>
             </table>
@@ -81,8 +66,4 @@ defineProps({
       </div>
     </div>
   </AuthenticatedLayout>
-<<<<<<< HEAD
 </template>
-=======
-</template>
->>>>>>> main
