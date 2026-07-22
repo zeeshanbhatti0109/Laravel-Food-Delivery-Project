@@ -33,7 +33,7 @@ class PermissionSeeder extends Seeder
         ->map(function ($set){
             return implode('.', $set);
         })->each(function ($permission){
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::create (['name'=>$permission]);
         });
         }
 }

@@ -17,16 +17,12 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $this->createAdminRole();
-<<<<<<< HEAD
-        $this->createVendorRole(); 
-=======
         $this->createVendorRole();
->>>>>>> main
     }
 
     protected function createRole(RoleName $role, Collection $permissions): void
     {
-        $newRole = Role::firstOrCreate(['name' => $role->value]);
+        $newRole = Role::create(['name' => $role->value]);
         $newRole->permissions()->sync($permissions);
     }
 
@@ -40,22 +36,14 @@ class RoleSeeder extends Seeder
         $this->createRole(RoleName::ADMIN, $permissions);
     }
 
-<<<<<<< HEAD
-    protected function createVendorRole(): void 
-    { 
-        $this->createRole(RoleName::VENDOR, collect()); 
-    } 
-}
-=======
     protected function createVendorRole(): void
     {
+        // ✅ Define what permissions the vendor should have
         $permissions = Permission::query()
-            ->where('name', 'like', 'restaurant.%')
-            ->orWhere('name', 'like', 'category.%')
-            ->orWhere('name', 'like', 'product.%')
+            ->where('name', 'like', 'restaurant.%')  // Vendor can manage restaurants
+            ->orWhere('name', 'like', 'order.%')     // Vendor can manage orders
             ->pluck('id');
 
         $this->createRole(RoleName::VENDOR, $permissions);
     }
 }
->>>>>>> main

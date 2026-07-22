@@ -31,26 +31,19 @@ const showingNavigationDropdown = ref(false)
                   Dashboard
                 </NavLink>
 
-<<<<<<< HEAD
-                <NavLink
-=======
                 <!-- ✅ ADD v-if TO THIS LINK -->
                 <NavLink
                   v-if="can('restaurant.viewAny')"
->>>>>>> main
                   :href="route('admin.restaurants.index')"
                   :active="route().current('admin.restaurants.index')"
                 >
                   Restaurants
                 </NavLink>
-<<<<<<< HEAD
-=======
                 <NavLink 
     v-if="can('product.viewAny') && can('category.viewAny')" 
     :href="route('vendor.menu')" 
     :active="route().current('vendor.menu')">Restaurant menu 
 </NavLink> 
->>>>>>> main
               </div>
             </div>
 

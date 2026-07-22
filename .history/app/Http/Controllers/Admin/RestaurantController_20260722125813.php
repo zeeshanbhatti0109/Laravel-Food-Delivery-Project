@@ -17,11 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Notifications\RestaurantOwnerInvitation;
-<<<<<<< HEAD
-=======
 use App\Http\Requests\Admin\UpdateRestaurantRequest;
 
->>>>>>> main
 
 class RestaurantController extends Controller
 {
@@ -74,8 +71,6 @@ class RestaurantController extends Controller
 
         return to_route('admin.restaurants.index');
     }
-<<<<<<< HEAD
-=======
     public function edit(Restaurant $restaurant): Response
 {
     $this->authorize('restaurant.update');
@@ -102,5 +97,4 @@ public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
         ->withStatus('Restaurant updated successfully.');
 }
 
->>>>>>> main
 }

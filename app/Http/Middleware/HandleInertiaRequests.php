@@ -36,10 +36,15 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $user,
+<<<<<<< HEAD
+=======
+                'permissions' => $user ? $user->permissions() : [],  // ✅ ADD THIS
+>>>>>>> main
                 'can' => $user ? [
                     'restaurant.create' => $user->isAdmin(),
                 ] : [],
             ],
+            'status' => session('status'),
         ];
     }
 }
