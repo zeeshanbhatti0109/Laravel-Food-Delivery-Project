@@ -5,9 +5,15 @@ import Dropdown from '@/Components/Dropdown.vue'
 import DropdownLink from '@/Components/DropdownLink.vue'
 import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import { Link } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
+
+const page = usePage()
 
 const showingNavigationDropdown = ref(false)
+
+const can = (permission) => {
+  return $page.props.auth.permissions?.includes(permission) ?? false
+}
 </script>
 
 <template>
@@ -20,15 +26,15 @@ const showingNavigationDropdown = ref(false)
             <div class="flex">
               <!-- Logo -->
               <div class="flex shrink-0 items-center">
-                <Link :href="route('dashboard')">
+                <Link :href="route('home')">
                   <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
                 </Link>
               </div>
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                  Dashboard
+                <NavLink :href="route('home')" :active="route().current('home')">
+                  Home
                 </NavLink>
 
                 <NavLink
@@ -44,12 +50,13 @@ const showingNavigationDropdown = ref(false)
                   :href="route('vendor.menu')" 
                   :active="route().current('vendor.menu')"
                 >
-                  Restaurant menu 
+                  Restaurant Menu 
                 </NavLink>
               </div>
             </div>
 
-            <div class="hidden sm:ms-6 sm:flex sm:items-center">
+            <!-- AUTHENTICATED USER: Show Settings Dropdown -->
+            <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
               <!-- Settings Dropdown -->
               <div class="relative ms-3">
                 <Dropdown align="right" width="48">
@@ -85,6 +92,16 @@ const showingNavigationDropdown = ref(false)
                   </template>
                 </Dropdown>
               </div>
+            </div>
+
+            <!-- GUEST USER: Show Login / Register Buttons -->
+            <div v-else class="hidden sm:flex gap-4 items-center sm:ml-6">
+              <Link :href="route('login')" class="btn btn-secondary">
+                Login
+              </Link>
+              <Link :href="route('register')" class="btn btn-primary">
+                Register
+              </Link>
             </div>
 
             <!-- Hamburger -->
@@ -129,8 +146,8 @@ const showingNavigationDropdown = ref(false)
           class="sm:hidden"
         >
           <div class="space-y-1 pb-3 pt-2">
-            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-              Dashboard
+            <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
+              Home
             </ResponsiveNavLink>
 
             <ResponsiveNavLink
@@ -146,12 +163,12 @@ const showingNavigationDropdown = ref(false)
               :href="route('vendor.menu')"
               :active="route().current('vendor.menu')"
             >
-              Restaurant menu
+              Restaurant Menu
             </ResponsiveNavLink>
           </div>
 
-          <!-- Responsive Settings Options -->
-          <div class="border-t border-gray-200 pb-1 pt-4">
+          <!-- ✅ Responsive Settings Options - Only for Authenticated Users -->
+          <div v-if="$page.props.auth.user" class="border-t border-gray-200 pb-1 pt-4">
             <div class="px-4">
               <div class="text-base font-medium text-gray-800">
                 {{ $page.props.auth.user.name }}
@@ -166,6 +183,14 @@ const showingNavigationDropdown = ref(false)
               <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                 Log Out
               </ResponsiveNavLink>
+            </div>
+          </div>
+
+          <!-- ✅ Guest User: Show Login/Register in Mobile Menu -->
+          <div v-else class="border-t border-gray-200 pb-1 pt-4">
+            <div class="mt-3 space-y-1">
+              <ResponsiveNavLink :href="route('login')"> Login </ResponsiveNavLink>
+              <ResponsiveNavLink :href="route('register')"> Register </ResponsiveNavLink>
             </div>
           </div>
         </div>

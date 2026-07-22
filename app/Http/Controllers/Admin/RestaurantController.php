@@ -13,7 +13,6 @@ use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Notifications\RestaurantOwnerInvitation;
@@ -23,20 +22,16 @@ class RestaurantController extends Controller
 {
     public function index(): Response
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
+        $this->authorize('restaurant.viewAny');
 
         return Inertia::render('Admin/Restaurants/Index', [
             'restaurants' => Restaurant::with(['city', 'owner'])->get(),
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403, 'This action is unauthorized.');
-        }
+        $this->authorize('restaurant.create');
 
         return Inertia::render('Admin/Restaurants/Create', [
             'cities' => City::get(['id', 'name']),

@@ -31,6 +31,8 @@ class RoleSeeder extends Seeder
         $permissions = Permission::query()
             ->where('name', 'like', 'user.%')
             ->orWhere('name', 'like', 'restaurant.%')
+            ->orWhere('name', 'like', 'category.%')
+            ->orWhere('name', 'like', 'product.%')
             ->pluck('id');
 
         $this->createRole(RoleName::ADMIN, $permissions);

@@ -6,12 +6,21 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Enums\RoleName;
+use App\Models\Role;
 
 /**
  * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
+
+    public function vendor()
+{
+    return $this->afterCreating(function (User $user) {
+        $user->roles()->sync(Role::where('name', RoleName::VENDOR->value)->first());
+    });
+}
     /**
      * The current password being used by the factory.
      */
