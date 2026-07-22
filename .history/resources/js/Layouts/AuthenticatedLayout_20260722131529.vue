@@ -131,6 +131,7 @@ const showingNavigationDropdown = ref(false)
               Dashboard
             </ResponsiveNavLink>
 
+            <!-- ✅ ADD v-if TO THIS MOBILE LINK TOO -->
             <ResponsiveNavLink
               v-if="can('restaurant.viewAny')"
               :href="route('admin.restaurants.index')"
@@ -138,13 +139,12 @@ const showingNavigationDropdown = ref(false)
             >
               Restaurants
             </ResponsiveNavLink>
+            </ResponsiveNavLink>
 
-            <ResponsiveNavLink
               v-if="can('product.viewAny') && can('category.viewAny')"
               :href="route('vendor.menu')"
               :active="route().current('vendor.menu')"
-            >
-              Restaurant menu
+              >Restaurant menu
             </ResponsiveNavLink>
           </div>
 

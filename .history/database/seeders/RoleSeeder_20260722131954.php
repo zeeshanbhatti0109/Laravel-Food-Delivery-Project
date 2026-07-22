@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
 
     protected function createRole(RoleName $role, Collection $permissions): void
     {
-        $newRole = Role::firstOrCreate(['name' => $role->value]);
+        $newRole = Role::create(['name' => $role->value]);
         $newRole->permissions()->sync($permissions);
     }
 

@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
 
     protected function createRole(RoleName $role, Collection $permissions): void
     {
-        $newRole = Role::firstOrCreate(['name' => $role->value]);
+        $newRole = Role::create(['name' => $role->value]);
         $newRole->permissions()->sync($permissions);
     }
 
@@ -38,10 +38,10 @@ class RoleSeeder extends Seeder
 
     protected function createVendorRole(): void
     {
+        // ✅ Define what permissions the vendor should have
         $permissions = Permission::query()
-            ->where('name', 'like', 'restaurant.%')
-            ->orWhere('name', 'like', 'category.%')
-            ->orWhere('name', 'like', 'product.%')
+            ->where('name', 'like', 'restaurant.%')  // Vendor can manage restaurants
+            ->orWhere('name', 'like', 'order.%')     // Vendor can manage orders
             ->pluck('id');
 
         $this->createRole(RoleName::VENDOR, $permissions);
