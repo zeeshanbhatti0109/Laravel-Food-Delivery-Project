@@ -46,7 +46,7 @@ const can = (permission) => {
                 </NavLink>
 
                 <NavLink 
-                  v-if="can('product.viewAny') && can('category.viewAny')" 
+                  v-if="$page.props.auth.roles.includes('vendor')" 
                   :href="route('vendor.menu')" 
                   :active="route().current('vendor.menu')"
                 >
@@ -57,6 +57,13 @@ const can = (permission) => {
 
             <!-- AUTHENTICATED USER: Show Settings Dropdown -->
             <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
+              <Link
+      v-if="can('cart.add')"
+:href="route('customer.cart.index')"
+      class="btn btn-primary"
+    >
+      View basket {{ ($page.props.cart.total / 100).toFixed(2) }} &euro;
+    </Link>
               <!-- Settings Dropdown -->
               <div class="relative ms-3">
                 <Dropdown align="right" width="48">
@@ -159,7 +166,7 @@ const can = (permission) => {
             </ResponsiveNavLink>
 
             <ResponsiveNavLink
-              v-if="can('product.viewAny') && can('category.viewAny')"
+              v-if="$page.props.auth.roles.includes('vendor')"
               :href="route('vendor.menu')"
               :active="route().current('vendor.menu')"
             >

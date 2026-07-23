@@ -57,6 +57,15 @@ defineProps({
                     >
                       Edit
                     </Link>
+                    <Link
+                      v-if="can('restaurant.delete')"
+                      :href="route('admin.restaurants.destroy', restaurant)"
+                      method="delete"
+                      as="button"
+                      class="btn btn-danger ml-2"
+                    >
+                      Delete
+                    </Link>
                   </td>
                 </tr>
               </tbody>

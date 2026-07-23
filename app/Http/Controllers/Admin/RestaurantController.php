@@ -90,4 +90,14 @@ class RestaurantController extends Controller
         return to_route('admin.restaurants.index')
             ->withStatus('Restaurant updated successfully.');
     }
+
+    public function destroy(Restaurant $restaurant): RedirectResponse
+    {
+        $this->authorize('restaurant.delete');
+        
+        $restaurant->delete();
+        
+        return to_route('admin.restaurants.index')
+            ->withStatus('Restaurant deleted successfully.');
+    }
 }

@@ -35,5 +35,7 @@ class PermissionSeeder extends Seeder
         })->each(function ($permission){
             Permission::firstOrCreate(['name' => $permission]);
         });
+
+        Permission::create(['name' => 'cart.add']); 
         }
 }

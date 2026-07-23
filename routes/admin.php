@@ -9,5 +9,5 @@ Route::group([
     'middleware' => ['auth'],
 ], function () {
     Route::resource('/restaurants', RestaurantController::class)
-        ->except(['show', 'destroy']);
+        ->except(['show']);
 });

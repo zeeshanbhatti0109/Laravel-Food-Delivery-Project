@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -36,12 +37,19 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $user,
+                'roles' => $user ? $user->roles->pluck('name') : [],
                 'permissions' => $userPermissions,
                 'can' => collect($userPermissions)
                     ->mapWithKeys(fn (string $permission) => [$permission => true])
                     ->all(),
             ],
             'status' => session('status'),
+            'cart' => session('cart', [
+                'items'           => [],
+                'total'           => 0,
+                'restaurant_name' => '',
+                'restaurant_id'   => '',
+            ]),
         ];
     }
 }

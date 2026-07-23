@@ -1,12 +1,28 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, usePage, useForm } from '@inertiajs/vue3'
+
+const page = usePage()
+const form = useForm({})
 
 defineProps({
   restaurant: {
     type: Object
   }
 })
+
+const addProduct = (product) => {
+  form.post(route('customer.cart.add', product), {
+    preserveScroll: true,
+    onError: () => {
+      if (confirm(`This will remove your ${page.props.cart.restaurant_name} order.`)) {
+        form.delete(route('customer.cart.destroy'), {
+          onSuccess: () => addProduct(product)
+        })
+      }
+    }
+  })
+}
 </script>
 
 <template>
@@ -42,9 +58,17 @@ defineProps({
                   <div class="grow flex flex-col gap-2">
                     <div class="font-bold">{{ product.name }}</div>
                     <div class="">{{ (product.price / 100).toFixed(2) }} €</div>
+                    
+                    <!-- ✅ UPDATED: Add to Cart Button -->
                     <div class="grow flex items-end">
-                      <button class="btn btn-primary btn-sm" type="button">
-                        Add {{ (product.price / 100).toFixed(2) }} € (Coming soon)
+                      <button
+                        v-if="can('cart.add') || !$page.props.auth.user"
+                        @click="addProduct(product)"
+                        class="btn btn-primary btn-sm"
+                        type="button"
+                        :disabled="form.processing"
+                      >
+                        Add {{ (product.price / 100).toFixed(2) }} €
                       </button>
                     </div>
                   </div>
