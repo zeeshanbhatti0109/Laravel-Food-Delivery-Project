@@ -12,7 +12,7 @@ const page = usePage()
 const showingNavigationDropdown = ref(false)
 
 const can = (permission) => {
-  return $page.props.auth.permissions?.includes(permission) ?? false
+  return page.props.auth.permissions?.includes(permission) ?? false
 }
 </script>
 
