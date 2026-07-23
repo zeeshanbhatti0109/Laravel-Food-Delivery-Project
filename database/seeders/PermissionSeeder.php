@@ -26,7 +26,8 @@ class PermissionSeeder extends Seeder
             'user',
             'restaurant',
             'category', 
-            'product', 
+            'product',
+            'order', 
         ];
         
         collect($resources)->crossJoin($actions)
