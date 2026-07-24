@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
                 'roles' => $user ? $user->roles->pluck('name') : [],
                 'permissions' => $userPermissions,
+                'is_vendor'   => $request->user()?->isVendor(), 
                 'can' => collect($userPermissions)
                     ->mapWithKeys(fn (string $permission) => [$permission => true])
                     ->all(),
