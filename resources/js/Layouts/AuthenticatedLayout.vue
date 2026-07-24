@@ -54,6 +54,10 @@ const can = (permission) => {
                   :href="route('vendor.staff-members.index')" :active="route().current('vendor.staff-members.index')">
                   Staff Management
                 </NavLink>
+                <NavLink v-if="can('order.update')" :href="route('staff.orders.index')"
+                  :active="route().current('staff.orders.index')">
+                  Restaurant Orders
+                </NavLink>
               </div>
             </div>
 
@@ -146,6 +150,10 @@ const can = (permission) => {
             <ResponsiveNavLink v-if="can('user.create') && $page.props.auth.is_vendor"
               :href="route('vendor.staff-members.index')" :active="route().current('vendor.staff-members.index')">
               Staff Management
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="can('order.update')" :href="route('staff.orders.index')"
+              :active="route().current('staff.orders.index')">
+              Restaurant Orders
             </ResponsiveNavLink>
           </div>
 

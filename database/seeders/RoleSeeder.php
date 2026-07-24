@@ -65,8 +65,12 @@ class RoleSeeder extends Seeder
         ])->pluck('id');
         $this->createRole(RoleName::CUSTOMER, $permissions);
     }
-public function createStaffRole() 
+public function createStaffRole(): void
 {
-    $this->createRole(RoleName::STAFF, collect());
+    $permissions = Permission::whereIn('name', [
+        'order.update',
+    ])->pluck('id');
+ 
+    $this->createRole(RoleName::STAFF, $permissions);
 }
 }

@@ -51,4 +51,11 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function staff()
+{
+    return $this->afterCreating(function (User $user) {
+        $user->roles()->sync(Role::where('name', RoleName::STAFF->value)->first());
+    });
+}
 }
