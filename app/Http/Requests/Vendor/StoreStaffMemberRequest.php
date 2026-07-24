@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Http\Requests\Vendor;
  
 use App\Models\User;

@@ -16,26 +16,29 @@ class StaffMemberController extends Controller
 {
     public function index(): Response
     {
-$this->authorize('user.viewAny'); 
- 
-    return Inertia::render('Vendor/Staff/Show', [
-        'staff' => auth()->user()->restaurant->staff,
-    ]);    }
+        $this->authorize('user.viewAny');
+
+        return Inertia::render('Vendor/Staff/Show', [
+            'staff' => auth()->user()->restaurant->staff,
+        ]);
+    }
  
     public function store(StoreStaffMemberRequest $request): RedirectResponse
     {
         $restaurant = $request->user()->restaurant;
         $attributes = $request->validated();
  
-$member = DB::transaction(function () use ($attributes, $restaurant) {        
-        $user = $restaurant->staff()->create([
+        $member = DB::transaction(function () use ($attributes, $restaurant) {
+            $user = $restaurant->staff()->create([
                 'name'     => $attributes['name'],
                 'email'    => $attributes['email'],
                 'password' => '',
             ]);
- 
-            $user->roles()->sync(Role::where('name', RoleName::STAFF->value)->first());
-                    return $user;
+
+            $staffRole = Role::where('name', RoleName::STAFF->value)->first();
+            $user->roles()->sync([$staffRole->id]);
+
+            return $user;
         });
      $member->notify(new RestaurantStaffInvitation($restaurant->name)); 
 

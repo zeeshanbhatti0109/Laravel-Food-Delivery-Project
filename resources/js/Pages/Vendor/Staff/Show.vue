@@ -31,6 +31,5 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        </div>
     </AuthenticatedLayout>
 </template>
