@@ -84,7 +84,7 @@ class User extends Authenticatable
         return $this->roles()->with('permissions')->get()
             ->map(function ($role) {
                 return $role->permissions->pluck('name');
-            })->flatten()->values()->unique()->toArray();
+            })->flatten()->unique()->values()->toArray();
     }
 
     public function hasPermission(string $permission): bool
